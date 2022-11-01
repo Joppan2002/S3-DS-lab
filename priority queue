@@ -1,0 +1,71 @@
+#include<stdio.h>
+struct qu
+{
+    int data;
+    int prio;    
+}pq[50];
+
+void main()
+{
+    int n,ch,front=-1,rear=0,temp,k,i;
+    printf("Enter the size of the priority queue\n");
+    scanf("%d",&n);
+    start:
+    printf("Enter your choice\n");
+    printf("1.Insertion\n2.Deletion\n3.Display\n");
+    scanf("%d",&ch);
+    switch (ch)
+    {
+        case 1:
+        rear++;
+        if(rear>=n)
+        {
+            printf("Priority queue full\n");
+        }
+        else
+        {
+            printf("Data\n");
+            scanf("%d",&pq[rear].data);
+            printf("Priority\n");
+            scanf("%d",&pq[rear].prio);
+        }
+        for(i=rear;i>front;i--)
+        {
+            if(pq[i].prio>pq[i-1].prio)
+            {
+                temp=pq[i].data;
+                pq[i].data=pq[i-1].data;
+                pq[i-1].data=temp;
+                temp=pq[i].prio;
+                pq[i].prio=pq[i-1].prio;
+                pq[i-1].prio=temp;
+            }
+        }
+        break;
+        case 2:
+    if(front==rear)
+    {
+        printf("Queue empty\n");
+    }
+    else
+    {
+        front++;
+        pq[front].data='\0';
+    }
+    case 3:if(front==rear)
+    {
+        printf("Queue empty\n");
+    }
+    else
+    {
+        front++;
+        printf("%d\n",pq[front].data);
+    }
+    break;
+    default:printf("Wrong Choice\n");
+    }
+    printf("Enter 1 to do again\n");
+    scanf("%d",&k);
+    if(k==1)
+    goto start;
+}
