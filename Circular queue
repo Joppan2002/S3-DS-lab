@@ -1,0 +1,50 @@
+#include<stdio.h>
+void main()
+{
+    int ch,n,front=0,rear=0,cq[50],k;
+    printf("Enter the size of the circular queue\n");
+    scanf("%d",&n);
+    start:
+    printf("Enter your choice\n");
+    printf("1.Insertion\n2.Deletion\n3.Display\n");
+    scanf("%d",&ch);
+    switch (ch)
+    {
+    case 1:
+    rear=(rear+1)%n;
+        if(front==rear)
+    {
+        printf("Queue full\n");
+    }
+    else
+    {
+        scanf("%d",&cq[rear]);
+    }
+        break;
+    case 2:
+    if(front==rear)
+    {
+        printf("Queue empty\n");
+    }
+    else
+    {
+        front=(front+1)%n;
+        cq[front]='\0';
+    }
+    case 3:if(front==rear)
+    {
+        printf("Queue empty\n");
+    }
+    else
+    {
+        front=(front+1)%n;
+        printf("%d\n",cq[front]);
+    }
+    break;
+    default:printf("Wrong Choice\n");
+    }
+    printf("Enter 1 to do again\n");
+    scanf("%d",&k);
+    if(k==1)
+    goto start;
+}
