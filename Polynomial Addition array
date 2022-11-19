@@ -1,0 +1,138 @@
+#include <stdio.h>
+struct poly
+{
+    int coeff;
+    int exp;
+};
+void main()
+{
+    struct poly a[50],b[50],c[50];
+    int i,j,k=0,deg1,deg2,temp,deg3;
+    printf("Enter the number of terms in first equation\n");
+    scanf("%d",&deg1);
+    printf("Enter the coefficient and power of the first equation\n");
+    for(i=0;i<deg1;i++)
+    {
+        scanf("%d%d",&a[i].coeff,&a[i].exp);
+    }
+    printf("Enter the number of terms in second equation\n");
+    scanf("%d",&deg2);
+    printf("Enter the coefficient and power of the second equation\n");
+    for(i=0;i<deg2;i++)
+    {
+        scanf("%d%d",&b[i].coeff,&b[i].exp);
+    }
+    a[deg1].coeff='*';
+    b[deg2].coeff='*';
+    for(i=0;i<deg1;i++)
+    {
+        for(j=0;j<deg1-1;j++)
+        {
+            if(a[j].exp>a[j+1].exp)
+            {
+                temp=a[j].coeff;
+                a[j].coeff=a[j+1].coeff;
+                a[j+1].coeff=temp;
+                temp=a[j].exp;
+                a[j].exp=a[j+1].exp;
+                a[j+1].exp=temp;
+            }
+        }
+    }
+    for(i=0;i<deg2;i++)
+    {
+        for(j=0;j<deg2-1;j++)
+        {
+            if(b[j].exp>b[j+1].exp)
+            {
+                temp=b[j].coeff;
+                b[j].coeff=b[j+1].coeff;
+                b[j+1].coeff=temp;
+                temp=b[j].exp;
+                b[j].exp=b[j+1].exp;
+                b[j+1].exp=temp;
+            }
+        }
+    }
+    i=j=0;
+    if(deg1>deg2)
+    deg3=deg1;
+    else
+    deg3=deg2;
+    while(a[i].coeff!='*')
+    {
+        while(b[j].coeff!='*')
+        {
+            if(a[i].exp==b[j].exp)
+            {
+                c[i].coeff=a[i].coeff+b[j].coeff;
+                c[i].exp=a[i].exp;
+                a[i].coeff=b[j].coeff=0;
+                a[i].exp=b[j].exp=0;
+                k++;
+            }
+            j++;
+        }
+        i++;
+    }
+    i=j=0;
+    while(a[i].coeff!='*')
+    {
+        if(a[i].coeff!=0)
+        {
+        c[k].coeff=a[i].coeff;
+        c[k].exp=a[i].exp;
+        k++;
+        }
+        i++;
+    }
+    i=0;
+    while(b[i].coeff!='*')
+    {
+        if(b[i].coeff!=0)
+        {
+        c[k].coeff=b[i].coeff;
+        c[k].exp=b[i].exp;
+        k++;
+        }
+        i++;
+    }
+    for(i=0;i<k;i++)
+    {
+        for(j=0;j<k-1;j++)
+        {
+            if(c[j].exp<c[j+1].exp)
+            {
+                temp=c[j].coeff;
+                c[j].coeff=c[j+1].coeff;
+                c[j+1].coeff=temp;
+                temp=c[j].exp;
+                c[j].exp=c[j+1].exp;
+                c[j+1].exp=temp;
+            }
+        }
+    }
+    for(i=0;i<k;i++)
+    {
+        for(j=0;j<k;j++)
+        {
+            if(c[i].exp==c[j].exp && i!=j)
+            {
+                c[i].coeff+=c[j].coeff;
+                c[j].coeff=0;
+            }
+        }
+    }
+    printf("Final Polynomial\n");
+    for(i=0;i<=k-1;i++)
+    {
+        if(c[i].coeff==0)
+        continue;
+        if(c[i].exp==0)
+        {
+        printf("+%d\t",c[i].coeff);
+        continue;
+        }
+        printf("+%dx^%d\t",c[i].coeff,c[i].exp);
+    }
+}
