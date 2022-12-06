@@ -1,0 +1,201 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+char data;
+struct node* left;
+struct node* right;
+};
+struct node* newNode(char data)
+{
+struct node* node=(struct node*)malloc(sizeof(struct node));
+node->data=data;
+node->left=NULL;
+node->right=NULL;
+return(node);
+}
+void inorder(struct node* node)
+{
+if(node==NULL||(node->data=='0'))
+return;
+inorder(node->left);
+printf("%c ",node->data);
+inorder(node->right);
+}
+void preorder(struct node* node)
+{
+if(node==NULL||(node->data=='0'))
+return;
+printf("%c ",node->data);
+preorder(node->left);
+preorder(node->right);
+}
+void postorder(struct node* node)
+{
+if(node==NULL||(node->data=='0'))
+return;
+postorder(node->left);
+postorder(node->right);
+printf("%c ",node->data);
+}
+int main()
+{
+int x;
+char data;
+int level;
+struct node* root1;
+struct node* root2;
+struct node* root3;
+struct node* root4;
+printf("Enter the number of levels for the binary tree\n");
+scanf("%d",&x);
+switch(x)
+{
+case 1:
+printf("Enter root term: ");
+scanf("%s",&data);
+root1=newNode(data);
+level=1;
+break;
+case 2:
+printf("Enter root term");
+scanf("%s",&data);
+root2=newNode(data);
+printf("Enter root->left term");
+scanf("%s",&data);
+root2->left=newNode(data);
+printf("Enter root->right term");
+scanf("%s",&data);
+               root2->right=newNode(data);
+               level=2;
+               break;
+       case 3:
+        printf("Enter root term");
+scanf("%s",&data);
+root3=newNode(data);
+printf("Enter root->left term");
+scanf("%s",&data);
+root3->left=newNode(data);
+printf("Enter root->right term");
+scanf("%s",&data);
+               root3->right=newNode(data);
+printf("Enter root->left->left term");
+scanf("%s",&data);
+root3->left->left=newNode(data);
+printf("Enter root->left->right term");
+scanf("%s",&data);
+root3->left->right=newNode(data);
+printf("Enter root->right->left term");
+scanf("%s",&data);
+               root3->right->left=newNode(data);
+printf("Enter root->right->right term");
+scanf("%s",&data);
+               root3->right->right=newNode(data);
+               level=3;
+               break;
+case 4:
+printf("Enter root term");
+scanf("%s",&data);
+root4=newNode(data);
+printf("Enter root->left term");
+scanf("%s",&data);
+root4->left=newNode(data);
+printf("Enter root->right term");
+scanf("%s",&data);
+               root4->right=newNode(data);
+printf("Enter root->left->left term");
+scanf("%s",&data);
+root4->left->left=newNode(data);
+printf("Enter root->left->right term");
+scanf("%s",&data);
+root4->left->right=newNode(data);
+printf("Enter root->right->left term");
+scanf("%s",&data);
+               root4->right->left=newNode(data);
+printf("Enter root->right->right term");
+scanf("%s",&data);
+               root4->right->right=newNode(data);
+               printf("Enter root->left->left->left term");
+scanf("%s",&data);
+root4->left->left->left=newNode(data);
+printf("Enter root->left->left->right term");
+scanf("%s",&data);
+root4->left->left->right=newNode(data);
+printf("Enter root->left->right->left term");
+scanf("%s",&data);
+root4->left->right->left=newNode(data);
+printf("Enter root->left->right->right term");
+scanf("%s",&data);
+root4->left->right->right=newNode(data);
+printf("Enter root->right->left->left term");
+scanf("%s",&data);
+               root4->right->left->left=newNode(data);
+               printf("Enter root->right->left->right term");
+scanf("%s",&data);
+               root4->right->left->right=newNode(data);
+               printf("Enter root->right->right->left term");
+scanf("%s",&data);
+               root4->right->right->left=newNode(data);
+               printf("Enter root->right->right->right term");
+scanf("%s",&data);
+               root4->right->right->right=newNode(data);
+               level=4;
+               break;
+        default:
+        break;
+}
+int y=1,c;
+while(y!=0)
+{
+printf("The available options are:\n");
+printf("1)Inorder\n2)Preorder\n3)Postorder\n4)Exit\n");
+printf("Enter your choice : ");
+scanf("%d",&c);
+switch(c)
+{
+case 1:
+printf("\nInorder expression is : ");
+if(level==1)
+inorder(root1);
+else if(level==2)
+inorder(root2);
+else if(level==3)
+inorder(root3);
+else
+inorder(root4);
+printf("\n");
+break;
+case 2:
+printf("\nPreorder expression is : ");
+if(level==1)
+preorder(root1);
+else if(level==2)
+preorder(root2);
+else if(level==3)
+preorder(root3);
+else
+preorder(root4);
+printf("\n");
+break;
+case 3:
+printf("\nPostorder expression is : ");
+if(level==1)
+postorder(root1);
+else if(level==2)
+postorder(root2);
+else if(level==3)
+postorder(root3);
+else
+postorder(root4);
+printf("\n");
+break;
+case 4:
+printf("Exiting");
+y=0;
+default:
+printf("Enter a valid choice\n");
+break;
+}
+}
+
+}
