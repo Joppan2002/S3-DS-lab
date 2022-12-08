@@ -1,0 +1,75 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Function to swap two values
+void swap(int *a, int *b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+// Function to partition the array and return the pivot index
+int partition(int *arr, int low, int high) {
+    // Choose the first element as the pivot
+    int pivot = arr[low];
+    int i = low;
+    int j = high;
+
+    while (i < j) {
+        // Increment i until we find an element greater than the pivot
+        while (arr[i] <= pivot && i <= high) {
+            i++;
+        }
+
+        // Decrement j until we find an element less than the pivot
+        while (arr[j] > pivot && j >= low) {
+            j--;
+        }
+
+        // If i is less than or equal to j, swap the elements at the indices i and j
+        if (i < j) {
+            swap(&arr[i], &arr[j]);
+        }
+    }
+
+    // When i is greater than j, swap the pivot element with the element at index j
+    arr[low] = arr[j];
+    arr[j] = pivot;
+
+    // Return the index of the pivot element
+    return j;
+}
+
+// Function to perform quicksort on the array
+void quicksort(int *arr, int low, int high) {
+    if (low < high) {
+        // Partition the array and get the pivot index
+        int pivotIndex = partition(arr, low, high);
+
+        // Perform quicksort on the left and right sides of the pivot
+        quicksort(arr, low, pivotIndex - 1);
+        quicksort(arr, pivotIndex + 1, high);
+    }
+}
+
+int main() {
+    int n,i;
+    int arr[100];
+    // Initialize an array to sort
+    printf("Enter the size of the array\n");
+    scanf("%d",&n);
+    printf("Enter the array elements\n");
+    for(i=0;i<n;i++)
+    {
+        scanf("%d",&arr[i]);
+    }
+    // Perform quicksort on the array
+    quicksort(arr, 0, n - 1);
+
+    // Print the sorted array
+    for (int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+
+    return 0;
+}
