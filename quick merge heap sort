@@ -1,0 +1,145 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<time.h>
+#define MAX 100
+
+void swap(int *a,int *b)
+{
+	int temp;
+	temp=*a;
+	*a=*b;
+	*b=temp;
+}
+
+void quicksort(int a[],int low,int high)
+{
+	int pivot,i,j;
+	if(low<high)
+	{
+		pivot=low;
+		i=low;
+		j=high;
+		while(i<j)
+		{
+			while(a[i]<=a[pivot] && i<=high)
+				i++;
+			while(a[j]>a[pivot] && j>=low)
+				j--;
+			if(i<j)
+				swap(&a[i],&a[j]);
+		}
+		swap(&a[j],&a[pivot]);
+		quicksort(a,low,j-1);
+		quicksort(a,j+1,high);
+	}
+}
+
+void merge(int a[],int low,int mid,int high)
+{
+	int i,j,k,c[MAX];
+	i=low;
+	j=mid+1;
+	k=low;
+	while(i<=mid && j<=high)
+	{
+		if(a[i]<a[j])
+			c[k++]=a[i++];
+		else
+			c[k++]=a[j++];
+	}
+	while(i<=mid)
+		c[k++]=a[i++];
+	while(j<=high)
+		c[k++]=a[j++];
+	for(i=low;i<=high;i++)
+		a[i]=c[i];
+}
+
+void mergesort(int a[],int low,int high)
+{
+	int mid;
+	if(low<high)
+	{
+		mid=(low+high)/2;
+		mergesort(a,low,mid);
+		mergesort(a,mid+1,high);
+		merge(a,low,mid,high);
+	}
+}
+
+void heapify(int a[],int n,int i)
+{
+	int largest=i;
+	int l=2*i+1;
+	int r=2*i+2;
+	if(l<n && a[l]>a[largest])
+		largest=l;
+	if(r<n && a[r]>a[largest])
+		largest=r;
+	if(largest!=i)
+	{
+		swap(&a[i],&a[largest]);
+		heapify(a,n,largest);
+	}
+}
+
+void heapsort(int a[],int n)
+{
+	int i;
+	for(i=n/2-1;i>=0;i--)
+		heapify(a,n,i);
+	for(i=n-1;i>=0;i--)
+	{
+		swap(&a[0],&a[i]);
+		heapify(a,i,0);
+	}
+}
+
+void main()
+{
+	int a[MAX],n,i,ch;
+	clock_t start,end;
+	double time;
+	printf("Enter the number of elements: ");
+	scanf("%d",&n);
+	printf("Enter the elements: ");
+	for(i=0;i<n;i++)
+		scanf("%d",&a[i]);
+	printf("\n1.Quick Sort\n2.Merge Sort\n3.Heap Sort\nEnter your choice: ");
+	scanf("%d",&ch);
+	switch(ch)
+	{
+		case 1:
+			start=clock();
+			quicksort(a,0,n-1);
+			end=clock();
+			time=(double)(end-start)/CLOCKS_PER_SEC;
+			printf("\nSorted array: ");
+			for(i=0;i<n;i++)
+				printf("%d ",a[i]);
+			printf("\nTime taken: %lf",time);
+			break;
+		case 2:
+			start=clock();
+			mergesort(a,0,n-1);
+			end=clock();
+			time=(double)(end-start)/CLOCKS_PER_SEC;
+			printf("\nSorted array: ");
+			for(i=0;i<n;i++)
+				printf("%d ",a[i]);
+			printf("\nTime taken: %lf",time);
+			break;
+		case 3:
+			start=clock();
+			heapsort(a,n);
+			end=clock();
+			time=(double)(end-start)/CLOCKS_PER_SEC;
+			printf("\nSorted array: ");
+			for(i=0;i<n;i++)
+				printf("%d ",a[i]);
+			printf("\nTime taken: %lf",time);
+			break;
+		default:
+			printf("\nInvalid choice!");
+	}
+}
