@@ -1,0 +1,88 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_VERTICES 100
+
+// adjacency matrix representation of the graph
+int graph[MAX_VERTICES][MAX_VERTICES];
+int visited[MAX_VERTICES];
+int n; // number of vertices
+
+void dfs(int u) {
+  visited[u] = 1;
+  printf("%d ", u);
+  for (int v = 0; v < n; v++) {
+    if (graph[u][v] && !visited[v]) {
+      dfs(v);
+    }
+  }
+}
+
+void bfs(int u) {
+  int queue[MAX_VERTICES], front = 0, rear = 0;
+  visited[u] = 1;
+  queue[rear] = u;
+  rear++;
+  while (front < rear) {
+    int v = queue[front];
+    printf("%d ", v);
+    front++;
+    for (int w = 0; w < n; w++) {
+      if (graph[v][w] && !visited[w]) {
+        visited[w] = 1;
+        queue[rear] = w;
+        rear++;
+      }
+    }
+  }
+}
+
+int main() {
+  // read the graph
+  printf("Enter the number of vertices: ");
+  scanf("%d", &n);
+  printf("Enter the adjacency matrix:\n");
+  for (int i = 0; i < n; i++) {
+    for (int j = 0; j < n; j++) {
+      scanf("%d", &graph[i][j]);
+    }
+  }
+
+  // menu
+  int choice;
+  int start_vertex;
+  while (1) {
+    printf("1. DFS\n");
+    printf("2. BFS\n");
+    printf("3. Exit\n");
+    printf("Enter your choice: ");
+    scanf("%d", &choice);
+    switch (choice) {
+      case 1:
+        printf("Enter the start vertex for DFS: ");
+        scanf("%d", &start_vertex);
+        for (int i = 0; i < n; i++) {
+          visited[i] = 0;
+        }
+        dfs(start_vertex);
+        printf("\n");
+        break;
+      case 2:
+        printf("Enter the start vertex for BFS: ");
+        scanf("%d", &start_vertex);
+        for (int i = 0; i < n; i++) {
+          visited[i] = 0;
+        }
+        bfs(start_vertex);
+        printf("\n");
+        break;
+      case 3:
+        exit(0);
+        break;
+      default:
+        printf("Invalid choice\n");
+    }
+  }
+
+  return 0;
+}
