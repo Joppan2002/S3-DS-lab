@@ -1,0 +1,72 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_NODES 100
+
+int adj_matrix[MAX_NODES][MAX_NODES];
+int visited[MAX_NODES];
+
+int queue[MAX_NODES];
+int front = -1, rear = -1;
+
+void dfs(int node, int num_nodes) {
+    visited[node] = 1;
+    printf("%d ", node);
+
+    for (int i = 0; i < num_nodes; i++) {
+        if (adj_matrix[node][i] == 1 && visited[i] == 0) {
+            dfs(i, num_nodes);
+        }
+    }
+}
+
+void bfs(int start, int num_nodes) {
+    visited[start] = 1;
+    queue[++rear] = start;
+
+    while (front != rear) {
+        int node = queue[++front];
+        printf("%d ", node);
+
+        for (int i = 0; i < num_nodes; i++) {
+            if (adj_matrix[node][i] == 1 && visited[i] == 0) {
+                visited[i] = 1;
+                queue[++rear] = i;
+            }
+        }
+    }
+}
+
+int main() {
+    int num_nodes, num_edges, start;
+
+    printf("Enter the number of nodes and edges: ");
+    scanf("%d %d", &num_nodes, &num_edges);
+
+    printf("Enter the edges: ");
+    for (int i = 0; i < num_edges; i++) {
+        int u, v;
+        scanf("%d %d", &u, &v);
+        adj_matrix[u][v] = 1;
+        adj_matrix[v][u] = 1;
+    }
+
+    printf("Enter the starting node: ");
+    scanf("%d", &start);
+
+    printf("DFS traversal: ");
+    dfs(start, num_nodes);
+    printf("\n");
+
+    for (int i = 0; i < num_nodes; i++) {
+        visited[i] = 0;
+    }
+
+    front = rear = -1;
+
+    printf("BFS traversal: ");
+    bfs(start, num_nodes);
+    printf("\n");
+
+    return 0;
+}
